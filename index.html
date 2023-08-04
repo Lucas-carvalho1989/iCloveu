@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>iChoveu</title>
+  <script src="src/main.js" type="module" defer></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <img src="./src/imgs/iChoveuIcon.png" alt="page icon">
+    <form id="search-form">
+      <input type="text" name="city" placeholder="Pesquisar cidade" id="search-input" />
+      <button type="submit" id="search-button">
+        <i class="material-icons">
+          search
+        </i>
+      </button>
+    </form>
+  </header>
+  <ul id="cities"></ul>
+  <div id="forecast-container" class="forecast-container hidden">
+    <button id="close-forecast">
+      <i class="material-icons">
+        close
+      </i>
+    </button>
+    <div id="weekdays" class="weekdays"></div>
+  </div>
+</body>
+
+</html>
