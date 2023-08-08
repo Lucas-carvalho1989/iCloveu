@@ -1,5 +1,6 @@
-import { searchCities } from './weatherAPI';
+import { searchCities, getWeatherByCity } from './weatherAPI';
 
+const ul = document.getElementById('cities');
 /**
  * Cria um elemento HTML com as informações passadas
  */
@@ -80,7 +81,6 @@ export function createCityElement(cityInfo) {
   const { name, country, temp, condition, icon /* , url */ } = cityInfo;
 
   const cityElement = createElement('li', 'city');
-
   const headingElement = createElement('div', 'city-heading');
   const nameElement = createElement('h2', 'city-name', name);
   const countryElement = createElement('p', 'city-country', country);
@@ -104,18 +104,29 @@ export function createCityElement(cityInfo) {
   cityElement.appendChild(headingElement);
   cityElement.appendChild(infoContainer);
 
-  return cityElement;
+  ul.appendChild(cityElement);
+  console.log(ul);
+  return ul;
 }
 
 /**
  * Lida com o evento de submit do formulário de busca
  */
-export function handleSearch(event) {
+export async function handleSearch(event) {
   event.preventDefault();
   clearChildrenById('cities');
 
   const searchInput = document.getElementById('search-input');
   const searchValue = searchInput.value;
-  searchCities(searchValue);
-  // seu código aqui
+  const citiesData = await searchCities(searchValue);
+  if (citiesData.length === 0) {
+    window.alert('Nenhuma cidade encontrada');
+  } else {
+    Promise.all(
+      citiesData.map((city) => {
+        const resultUrl = city.url;
+        return getWeatherByCity(resultUrl);
+      }),
+    );
+  }
 }
