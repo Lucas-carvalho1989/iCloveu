@@ -104,9 +104,7 @@ export function createCityElement(cityInfo) {
   cityElement.appendChild(headingElement);
   cityElement.appendChild(infoContainer);
 
-  ul.appendChild(cityElement);
-  console.log(ul);
-  return ul;
+  return cityElement;
 }
 
 /**
@@ -115,18 +113,23 @@ export function createCityElement(cityInfo) {
 export async function handleSearch(event) {
   event.preventDefault();
   clearChildrenById('cities');
-
   const searchInput = document.getElementById('search-input');
   const searchValue = searchInput.value;
   const citiesData = await searchCities(searchValue);
   if (citiesData.length === 0) {
     window.alert('Nenhuma cidade encontrada');
   } else {
-    Promise.all(
+    const result = await Promise.all(
       citiesData.map((city) => {
         const resultUrl = city.url;
         return getWeatherByCity(resultUrl);
       }),
     );
+    result.forEach((element) => {
+      const dataHtml = createCityElement(element);
+      ul.appendChild(dataHtml);
+      console.log(ul);
+      return ul;
+    });
   }
 }
