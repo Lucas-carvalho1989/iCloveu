@@ -47,7 +47,7 @@ header > form > input::placeholder {
 }
 
 header > form > button {
-  width: 80px;
+  width: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
