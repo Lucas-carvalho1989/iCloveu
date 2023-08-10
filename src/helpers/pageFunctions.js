@@ -1,4 +1,4 @@
-import { searchCities, getWeatherByCity } from './weatherAPI';
+import { searchCities, getWeatherByCity, weekdayTemp } from './weatherAPI';
 
 const ul = document.getElementById('cities');
 /**
@@ -78,8 +78,10 @@ export function showForecast(forecastList) {
  * Recebe um objeto com as informações de uma cidade e retorna um elemento HTML
  */
 export function createCityElement(cityInfo) {
-  const { name, country, temp, condition, icon /* , url */ } = cityInfo;
-
+  const { name, country, temp, condition, icon, url } = cityInfo;
+  console.log(cityInfo);
+  const buttonTemp = document.createElement('button');
+  buttonTemp.textContent = 'Ver previsão';
   const cityElement = createElement('li', 'city');
   const headingElement = createElement('div', 'city-heading');
   const nameElement = createElement('h2', 'city-name', name);
@@ -103,7 +105,12 @@ export function createCityElement(cityInfo) {
 
   cityElement.appendChild(headingElement);
   cityElement.appendChild(infoContainer);
+  cityElement.appendChild(buttonTemp);
 
+  buttonTemp.addEventListener('click', async () => {
+    const previsao = await weekdayTemp(url);
+    showForecast(previsao);
+  });
   return cityElement;
 }
 
@@ -128,7 +135,6 @@ export async function handleSearch(event) {
     result.forEach((element) => {
       const dataHtml = createCityElement(element);
       ul.appendChild(dataHtml);
-      console.log(ul);
       return ul;
     });
   }
