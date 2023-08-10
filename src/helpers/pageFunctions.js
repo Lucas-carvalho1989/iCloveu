@@ -79,9 +79,9 @@ export function showForecast(forecastList) {
  */
 export function createCityElement(cityInfo) {
   const { name, country, temp, condition, icon, url } = cityInfo;
-  console.log(cityInfo);
   const buttonTemp = document.createElement('button');
-  buttonTemp.textContent = 'Ver previsão';
+  buttonTemp.innerHTML = 'Ver previsão';
+  buttonTemp.className = 'buttonTemp';
   const cityElement = createElement('li', 'city');
   const headingElement = createElement('div', 'city-heading');
   const nameElement = createElement('h2', 'city-name', name);
